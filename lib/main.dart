@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
             return [
               SliverAppBar(
                 elevation: 0,
-                backgroundColor: Colors.blueGrey,
+                backgroundColor: Colors.teal,
                 pinned: true,
                 expandedHeight: MediaQuery.of(context).size.height * 0.35,
                 collapsedHeight: MediaQuery.of(context).size.height * 0.13,
@@ -92,6 +92,16 @@ class _MyAppState extends State<MyApp> {
                           fontSize: 20.0,
                         ),
                       ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                  bottomLeft: _isShrink
+                      ? const Radius.circular(0.0)
+                      : const Radius.circular(40.0),
+                  bottomRight: _isShrink
+                      ? const Radius.circular(40.0)
+                      : const Radius.circular(0.0),
+                  // bottomRight: Radius.circular(40.0)
+                )),
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   title: _isShrink
@@ -133,12 +143,12 @@ class _MyAppState extends State<MyApp> {
                   background: SafeArea(
                     child: Stack(
                       children: <Widget>[
-                        Positioned.fill(
-                          child: Image.network(
-                            "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        // Positioned.fill(
+                        //   child: Image.network(
+                        //     "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
                         Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -205,147 +215,171 @@ class _MyAppState extends State<MyApp> {
 }
 
 //A cicular loading indicator made up of colored dots. The current dot circles around the dot clockwise.
-class DottedCircularProgressIndicatorFb extends StatefulWidget {
-  const DottedCircularProgressIndicatorFb({
-    Key? key,
-    required this.currentDotColor,
-    required this.defaultDotColor,
-    required this.numDots,
-    this.size = 50,
-    this.dotSize = 5,
-    this.secondsPerRotation = 1,
-  }) : super(key: key);
+// class DottedCircularProgressIndicatorFb extends StatefulWidget {
+//   const DottedCircularProgressIndicatorFb({
+//     Key? key,
+//     required this.currentDotColor,
+//     required this.defaultDotColor,
+//     required this.numDots,
+//     this.size = 50,
+//     this.dotSize = 5,
+//     this.secondsPerRotation = 1,
+//   }) : super(key: key);
 
-  final int numDots; //Number of dots around the dot circle
-  final double size; //Width and height of the
-  final double dotSize; //Diameter of each dot
-  final int secondsPerRotation;
-  final Color
-      currentDotColor; //The color of the dot that "circles" around the indicator
-  final Color defaultDotColor; //The color of the dots that aren't animated
+//   final int numDots; //Number of dots around the dot circle
+//   final double size; //Width and height of the
+//   final double dotSize; //Diameter of each dot
+//   final int secondsPerRotation;
+//   final Color
+//       currentDotColor; //The color of the dot that "circles" around the indicator
+//   final Color defaultDotColor; //The color of the dots that aren't animated
 
-  @override
-  State<DottedCircularProgressIndicatorFb> createState() =>
-      _DottedCircularProgressIndicatorFbState();
-}
+//   @override
+//   State<DottedCircularProgressIndicatorFb> createState() =>
+//       _DottedCircularProgressIndicatorFbState();
+// }
 
-class _DottedCircularProgressIndicatorFbState
-    extends State<DottedCircularProgressIndicatorFb>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animController;
-  late Animation<int> animation;
+// class _DottedCircularProgressIndicatorFbState
+//     extends State<DottedCircularProgressIndicatorFb>
+//     with SingleTickerProviderStateMixin {
+//   late AnimationController animController;
+//   late Animation<int> animation;
 
-  @override
-  void initState() {
-    super.initState();
-    animController = AnimationController(
-        duration: Duration(seconds: widget.secondsPerRotation), vsync: this)
-      ..repeat();
-    animation =
-        StepTween(begin: 0, end: widget.numDots + 1).animate(animController)
-          ..addListener(() {
-            setState(() {});
-          });
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     animController = AnimationController(
+//         duration: Duration(seconds: widget.secondsPerRotation), vsync: this)
+//       ..repeat();
+//     animation =
+//         StepTween(begin: 0, end: widget.numDots + 1).animate(animController)
+//           ..addListener(() {
+//             setState(() {});
+//           });
+//   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    animController.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     // TODO: implement dispose
+//     animController.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: widget.size,
-      height: widget.size,
-      // decoration: BoxDecoration(color: Colors.red), //for debugging purposes
-      child: CustomPaint(
-        child: Container(),
-        painter: DottedCircularProgressIndicatorPainterFb(
-            dotColor: widget.defaultDotColor,
-            currentDotColor: widget.currentDotColor,
-            percentage: 0,
-            numDots: widget.numDots,
-            currentDotNum: animation.value,
-            dotWidth: widget.dotSize),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: widget.size,
+//       height: widget.size,
+//       // decoration: BoxDecoration(color: Colors.red), //for debugging purposes
+//       child: CustomPaint(
+//         child: Container(),
+//         painter: DottedCircularProgressIndicatorPainterFb(
+//             dotColor: widget.defaultDotColor,
+//             currentDotColor: widget.currentDotColor,
+//             percentage: 0,
+//             numDots: widget.numDots,
+//             currentDotNum: animation.value,
+//             dotWidth: widget.dotSize),
+//       ),
+//     );
+//   }
+// }
 
-class DottedCircularProgressIndicatorPainterFb extends CustomPainter {
-  final double percentage;
-  final Color dotColor;
-  final Color currentDotColor;
-  final int numDots;
-  final int currentDotNum;
-  final double dotWidth;
+// class DottedCircularProgressIndicatorPainterFb extends CustomPainter {
+//   final double percentage;
+//   final Color dotColor;
+//   final Color currentDotColor;
+//   final int numDots;
+//   final int currentDotNum;
+//   final double dotWidth;
 
-  DottedCircularProgressIndicatorPainterFb(
-      {required this.dotColor,
-      required this.currentDotColor,
-      required this.percentage,
-      required this.numDots,
-      required this.dotWidth,
-      required this.currentDotNum});
+//   DottedCircularProgressIndicatorPainterFb(
+//       {required this.dotColor,
+//       required this.currentDotColor,
+//       required this.percentage,
+//       required this.numDots,
+//       required this.dotWidth,
+//       required this.currentDotNum});
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final double smallestSide = Math.min(size.width, size.height);
-    final double radius = (smallestSide / 2 - dotWidth / 2) - dotWidth / 2;
-    final Offset centerPoint = Offset(size.width / 2, size.height / 2);
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final double smallestSide = Math.min(size.width, size.height);
+//     final double radius = (smallestSide / 2 - dotWidth / 2) - dotWidth / 2;
+//     final Offset centerPoint = Offset(size.width / 2, size.height / 2);
 
-    final dotPaint = Paint()
-      ..style = PaintingStyle.fill
-      ..color = dotColor;
+//     final dotPaint = Paint()
+//       ..style = PaintingStyle.fill
+//       ..color = dotColor;
 
-    Circle myCircle = Circle(radius: radius, totalNumOfDots: numDots);
-    for (var i = 0; i < numDots; i++) {
-      if (i == currentDotNum) {
-        dotPaint.color = currentDotColor;
-      } else {
-        dotPaint.color = dotColor;
-      }
-      canvas.drawCircle(
-          centerPoint - myCircle.calcDotOffsetFromCenter(i, radius),
-          dotWidth,
-          dotPaint);
-    }
-  }
+//     Circle myCircle = Circle(radius: radius, totalNumOfDots: numDots);
+//     for (var i = 0; i < numDots; i++) {
+//       if (i == currentDotNum) {
+//         dotPaint.color = currentDotColor;
+//       } else {
+//         dotPaint.color = dotColor;
+//       }
+//       canvas.drawCircle(
+//           centerPoint - myCircle.calcDotOffsetFromCenter(i, radius),
+//           dotWidth,
+//           dotPaint);
+//     }
+//   }
 
-  @override
-  bool shouldRepaint(DottedCircularProgressIndicatorPainterFb oldDelegate) =>
-      oldDelegate.currentDotNum != currentDotNum ? true : false;
-}
+//   @override
+//   bool shouldRepaint(DottedCircularProgressIndicatorPainterFb oldDelegate) =>
+//       oldDelegate.currentDotNum != currentDotNum ? true : false;
+// }
 
-//  Calculats the offst each dot based on the total number of dots
-class Circle {
-  int totalNumOfDots;
-  double radius;
+// //  Calculats the offst each dot based on the total number of dots
+// class Circle {
+//   int totalNumOfDots;
+//   double radius;
 
-  Circle({required this.totalNumOfDots, required this.radius});
+//   Circle({required this.totalNumOfDots, required this.radius});
 
-  Offset calcDotOffsetFromCenter(int dotNumber, double radius) {
-    return Offset(_calcDotX(dotNumber), _calcDotY(dotNumber));
-  }
+//   Offset calcDotOffsetFromCenter(int dotNumber, double radius) {
+//     return Offset(_calcDotX(dotNumber), _calcDotY(dotNumber));
+//   }
 
-  double _calcDotAngle(int currentDotNumber) {
-    return -currentDotNumber * _calcRadiansPerDot();
-  }
+//   double _calcDotAngle(int currentDotNumber) {
+//     return -currentDotNumber * _calcRadiansPerDot();
+//   }
 
-  double _calcRadiansPerDot() {
-    return 2 * Math.pi / (totalNumOfDots);
-  }
+//   double _calcRadiansPerDot() {
+//     return 2 * Math.pi / (totalNumOfDots);
+//   }
 
-  double _calcDotX(int thisDotNum) {
-    //offset from indicator circles center
-    return radius * Math.sin(_calcDotAngle(thisDotNum));
-  }
+//   double _calcDotX(int thisDotNum) {
+//     //offset from indicator circles center
+//     return radius * Math.sin(_calcDotAngle(thisDotNum));
+//   }
 
-  double _calcDotY(int thisDotNum) {
-    //offset from indicator circles center
-    return radius * Math.cos(_calcDotAngle(thisDotNum));
-  }
-}
+//   double _calcDotY(int thisDotNum) {
+//     //offset from indicator circles center
+//     return radius * Math.cos(_calcDotAngle(thisDotNum));
+//   }
+// }
+
+// class BackgroundImageFb1 extends StatelessWidget {
+//   final Widget child;
+//   final String imageUrl;
+//   const BackgroundImageFb1(
+//       {required this.child, required this.imageUrl, Key? key})
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       // Place as the child widget of a scaffold
+//       width: double.infinity,
+//       height: double.infinity,
+//       decoration: BoxDecoration(
+//         image: DecorationImage(
+//           image: NetworkImage(imageUrl),
+//           fit: BoxFit.cover,
+//         ),
+//       ),
+//       child: child,
+//     );
+//   }
+// }
